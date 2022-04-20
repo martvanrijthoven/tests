@@ -21,10 +21,14 @@ jobs:
         with:
           python-version: ${{ env.PYTHON_VERSION }}
 
-      - name: Test
+      - name: Install openslide
         shell: cmd
         run: |
           ./install_openslide_windows.bat
+
+      - name: Tests
+        shell: cmd
+        run: |
           pip install openslide-python
           pip install pytest
           pip install pytest-cov
