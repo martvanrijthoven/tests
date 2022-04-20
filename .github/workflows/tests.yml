@@ -31,4 +31,4 @@ jobs:
         run: |
           pip install pytest
           pip install pytest-cov
-          pytest tests tests --cov --cov-report term-missing
+          pytest -s tests tests --cov --cov-report term-missing
