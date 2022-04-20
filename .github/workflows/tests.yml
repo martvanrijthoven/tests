@@ -29,6 +29,7 @@ jobs:
       - name: Tests
         shell: cmd
         run: |
+          setx OPENSLIDE_PATH c:\\openslide\\openslide-win64-20171122\\bin
           pip install openslide-python
           pip install pytest
           pip install pytest-cov
