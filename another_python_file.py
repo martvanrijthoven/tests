@@ -1,13 +1,13 @@
-"""My docstring"""
+"""
+Added doc strings
+"""
 
 
-class MyClass:
-  """ Docstring of A"""
+def main() -> None:
+    """main function to print hello world"""
+    print("hello world")
 
-  def __init__(self, a_var: int) -> None:
-      self._a_var = a_var
 
-  @property
-  def a_var(self) -> int:
-    return self._a_var
-    
+if __name__ == "__main__":
+    # run main
+    main()
