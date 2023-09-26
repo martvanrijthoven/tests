@@ -13,5 +13,11 @@ jobs:
               with:
                 python-version: "3.10.13"
       
-            - name: Run precommit
+            # https://github.com/pre-commit/action/issues/7#issuecomment-1577152383
+            - id: changed-files
+              uses: tj-actions/changed-files@v36
+
+            - name: Run precommit 
               uses: pre-commit/action@v3.0.0
+              with:
+                extra_args: pip-compile --files ${{ steps.changed-files.outputs.all_changed_files }}
