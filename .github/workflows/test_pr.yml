@@ -1,35 +1,46 @@
-# https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#running-a-workflow-when-a-pull-request-is-approved
-name: precommit-approved
+# This action is triggered when a pull request review is submitted.
+# It will run precommit checks only when the pull request is approved.
+# Reference: https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#running-a-workflow-when-a-pull-request-is-approved
+
+name: Run Precommit Checks on PR Approval
 
 on:   
     pull_request_review:
         types: [submitted]
 
 jobs:
-    precommit-check:
+    # This job runs the precommit checks on the changed files.
+    run_precommit_checks:
+      
+        # Ensures the job only runs when the PR review state is "approved".
         if: github.event.review.state == 'approved'
-        runs-on: ubuntu-latest
+        runs-on: ubuntu-22.04
+        
         steps:
-            - uses: actions/checkout@v4
+            # Checkout the repository to the GitHub Actions runner.
+            - name: Checkout Repository
+              uses: actions/checkout@v4
 
-            - name: print
-              shell: bash
-              run: echo ${{ github.event.review.state }}
-
-            - name: Set up Python
+            # Set up the desired Python environment.
+            - name: Setup Python Environment
               uses: actions/setup-python@v4
               with:
-                python-version: "3.10.13"
-                cache: 'pip'    
-            - run: pip install -r .github/workflows/requirements.txt
-
+                python-version: '3.10.13'
+                cache: 'pip'
             
-            # https://github.com/pre-commit/action/issues/7#issuecomment-1577152383
-            - id: changed-files
-              uses: tj-actions/changed-files@v36
+            # Install the required dependencies for local repos in the precommit hooks
+            - name: Install Dependencies
+              run: pip install -r .github/workflows/requirements.txt
 
-            - name: Run precommit
+            # Determine which python files have changed in the PR.
+            - name: Get Changed Files
+              id: changed-files
+              uses: tj-actions/changed-files@v36
+              with:
+                files: '*.py'
+
+            # Run the precommit hooks only on the changed files.
+            - name: Execute Precommit Hooks on Changed Files in PR
               uses: pre-commit/action@v3.0.0
               with:
                 extra_args: --files ${{ steps.changed-files.outputs.all_changed_files }}
-
