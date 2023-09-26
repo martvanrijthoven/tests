@@ -1,3 +1,4 @@
+# https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#running-a-workflow-when-a-pull-request-is-approved
 name: precommit-approved
 
 on:   
@@ -6,6 +7,7 @@ on:
 
 jobs:
     precommit-check:
+        if: github.event.review.state == 'approved'
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v4
@@ -27,3 +29,4 @@ jobs:
               uses: pre-commit/action@v3.0.0
               with:
                 extra_args: --files ${{ steps.changed-files.outputs.all_changed_files }}
+
