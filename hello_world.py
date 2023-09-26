@@ -1,4 +1,6 @@
-
+"""
+Added doc strings
+"""
 
 def main():
   print("hello world")
