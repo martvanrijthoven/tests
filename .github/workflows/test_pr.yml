@@ -20,7 +20,10 @@ jobs:
               uses: actions/setup-python@v4
               with:
                 python-version: "3.10.13"
+                cache: 'pip'    
+            - run: pip install -r .github/workflows/requirements.txt
 
+            
             # https://github.com/pre-commit/action/issues/7#issuecomment-1577152383
             - id: changed-files
               uses: tj-actions/changed-files@v36
