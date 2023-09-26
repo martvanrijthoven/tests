@@ -1,23 +1,23 @@
 name: precommit-approved
 
 on: push
-  
+
 jobs:
     precommit-check:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v4
-      
+
             - name: Set up Python
               uses: actions/setup-python@v4
               with:
                 python-version: "3.10.13"
-      
+
             # https://github.com/pre-commit/action/issues/7#issuecomment-1577152383
             - id: changed-files
               uses: tj-actions/changed-files@v36
 
-            - name: Run precommit 
+            - name: Run precommit
               uses: pre-commit/action@v3.0.0
               with:
                 extra_args: --files ${{ steps.changed-files.outputs.all_changed_files }}
