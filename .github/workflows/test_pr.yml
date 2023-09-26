@@ -7,17 +7,15 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v4
-      
+              with:
+                # requites to grab the history of the PR
+                fetch-depth: 0 
             - name: Set up Python
               uses: actions/setup-python@v4
               with:
                 python-version: "3.10.13"
-      
-            # https://github.com/pre-commit/action/issues/7#issuecomment-1577152383
-            - id: changed-files
-              uses: tj-actions/changed-files@v36
-
             - name: Run precommit 
               uses: pre-commit/action@v3.0.0
               with:
-                extra_args: pip-compile --files ${{ steps.changed-files.outputs.all_changed_files }}
+                extra_args: --color=always --from-ref ${{ github.event.pull_request.base.sha }} --to-ref ${{ github.event.pull_request.head.sha }}
+              
