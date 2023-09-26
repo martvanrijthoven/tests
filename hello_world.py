@@ -2,7 +2,9 @@
 Added doc strings
 """
 
+
 def main():
+    """main function to print hello world"""
     print("hello world")
 
 
