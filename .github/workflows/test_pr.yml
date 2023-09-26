@@ -5,6 +5,7 @@
 name: Run Precommit Checks on PR Approval
 
 on:   
+    workflow_dispatch:
     pull_request_review:
         types: [submitted]
 
