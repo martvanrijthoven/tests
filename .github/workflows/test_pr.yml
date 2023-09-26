@@ -1,9 +1,12 @@
 name: precommit-approved
 
-on: push
+on:   
+    pull_request_review:
+        types: [submitted]
 
 jobs:
     precommit-check:
+        if: github.event.review.state == 'approved'
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v4
