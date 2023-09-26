@@ -3,7 +3,7 @@ Added doc strings
 """
 
 
-def main():
+def main() -> None:
     """main function to print hello world"""
     print("hello world")
 
